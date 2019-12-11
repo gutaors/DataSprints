@@ -1,11 +1,76 @@
-﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+<meta charset="utf-8">
+<title>DataSprints</title>
 </head>
-<body>
 
+<body>
+<img src="images.jpg" width="100%" height="177" alt=""/>
+<h1>DataSprints -&nbsp; &nbsp; &nbsp;Análise dos dados de Taxi em NY nos anos de 2009, 2010, 2011 e 1012</h1>
+<p>&nbsp;</p>
+<p>Esta análise inicia com um ETL que faz a ingestão dos Json  para o Sql Server e realiza transformações e análises no banco de dados.</p>
+<p>Em seguida, foram utilizados os datasets gerados no Sql Server para produzir mais análises e visualizações no python, que são objeto deste documento.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+<h1>Inspeção dos dados</h1>
+<p>A primeira atividade é a inspeção dos dados. Esta inspeção busca por integridade e por informações relevantes que podem ser inferidas a partir do que foi fornecido.</p>
+<p>Abaixo temos um pequeno recorte dos nossos dados.&nbsp;</p>
+<img src="1.JPG" width="1119" height="271" alt=""/>
+<h2>Viagens com até dois passageiros</h1>
+<p>A primeira pergunta que os dados respondem diz respeito à&nbsp; distância média das corridas com até dois passageiros.</p>
+<p><br>
+  Para produzir esta informação foi gerado um dataset direto no sql que já filtrava todas as corridas com até dois passageiros. O cálculo da média foi feito no sql e também no python para mostrar que pode ser feito das duas forma Uma informação relevante sobre o dataset é que&nbsp;temos 3.319.652 de corridas com até 2 passageiros, ou seja, a maioria, já que ao todo são 4.000.000 de corridas.</p>
+<img src="2.JPG" width="383" height="129" alt=""/>
+	<p>A distância média percorrida nestas corridas é de&nbsp;2.66 km.&nbsp;Conforme verificamos, a distância média obtida no python é a mesma obtida pelo sql. Fiz nos dois para mostrar que podemos escolher qualquer das abordagens. Em média, nas corridas com até dois passageiros, temos 2,6 km rodados.</p>
+<h1>Valor médio das corridas por mês</h1>
+<p>&nbsp;</p>
+<p> O gráfico abaixo exibe o valor médio das corridas por mês. Embora o gráfico apresente oscilações, notamos que a faixa de valores oscila em torno de 9,6 dólares.&nbsp; </p>
+<p>&nbsp;</p>
+<img src="4.JPG" width="504" height="315" alt=""/>
+<h1>Tarifas médias por hora do dia</h1>
+<p> Foi gerado também um gráfico com as tarifas médias em relação à hora do dia.</p>
+<p>&nbsp;</p>
+<p> <img src="5.JPG" width="483" height="317" alt=""> </p>
+<p>Podemos notar que às 13 e às 20:00 horas são os horários com menores valores. </p>
+<h1>Empresas e valores obtidos</h1>
+<p>Comparando por empresa, nota-se que há três companhias que concentram quase todas as viagens:</p>
+<p>&nbsp; </p>
+<p>&nbsp;</p>
+<p><img src="6.JPG" width="613" height="325" alt=""> </p>
+<p> Como podemos verificar no gráfico , a empresa Creative Mobile Technologies possui maior valor em corridas, seguida de perto pela Verifone Inc e bem atrás pela Dependable Driver Service. A  empresa Total Solutions Co nem aparece no gráfico por apresentar um valor quase insignificante.</p>
+<h1>Histograma com a distribuição mensal com as viagens pagas em dinheiro.&nbsp;</h1>
+<p><img src="7.JPG" width="479" height="292" alt=""> </p>
+<p> O histograma  mostra que os meses 11 e 12 são os que&nbsp; apresentam menor número de viagens</p>
+<h1>Série Temporal com o número de gorjetas por dia nos últimos três meses de 2012&nbsp; &nbsp; &nbsp; &nbsp;</h1>
+<p><img src="8.JPG" width="596" height="228" alt=""> </p>
+<p> Esta série temporal apresenta os meses 8,9 e 10 de 2012, que são os três últimos meses catalogados no dataset&nbsp; . Note que, no dia 28/10 ocorreram pouquíssimas gorjetas, o que significam poucas corridas , só ocorreram 15 gorjetas neste dia. Este foi o dia em que o furacão Sandy passou pela costa leste, logo este dia é um outlier que pode enviesar nossas análises</p>
+<h1>Valores e locais de embarque/desembarque</h1>
+<p>Valor total (incluindo pedágios), dados locais de embarque e desembarque.&nbsp;&nbsp;</p>
+<p><img src="9.JPG" width="517" height="329" alt=""> </p>
+<p> Este gráfico mostra a distância em Km em relação aos valores das viagens. A distância foi calculada com base nas latitudes e longitudes de origem e de destino. É interessante notar que a função haversine_distance faz uma linha entre origem e destino, levando em consideração a curvatura do planeta. Nosso gráfico mostra que a maior parte das viagens são as de menor quilometragem e apresentam valores mais baixos. Esta análise é muito importante para a escolha do tipo de veículo e também para escolher a abordagem a ser utilizada nas campanhas para vender os serviços da empresa.</p>
+<h1>Sábados e domingos:</h1>
+<p> tempo médio de viagem aos sábados: 00:08:39 </p>
+<p>tempo médio de viagem aos domingos: 08:39</p>
+<p>latitude origem aos sábados: 40.11586</p>
+<p> latitude origem aos domingos: 40.124</p>
+<p> longitude origem aos sábados: -72.813</p>
+<p>longitude origem aos domingos: -72.8294</p>
+<p> latitude destino aos sábados: 40.126</p>
+<p>latitude destino aos domingos: 40.135</p>
+<p>longitude destino aos sábados: -72.832</p>
+<p>longitude destino aos domingos: -72.849</p>
+<p> É interessante notar que sábados e domingos apresentam o mesmo tempo médio de viagem, aproximadamente 8 minutos e 39 segundos. Fiz também uma análise das latitudes e longitudes médias aos sábados e domingos, resultando em valores bem semelhantes. Esta média indica os centróides da região onde as corridas acontecem. Esta informação pode ser utilizada para se criar uma estratégia logística, posicionando os veículos próximos a pontos com maior volume de embarques. </p>
+<h1>Sazonalidade&nbsp;</h1>
+<p> <img src="10.JPG" width="344" height="164" alt="">&nbsp;</p>
+<p> Notamos que o dia da semana que tem mais corridas é a segunda-feira, seguida pelo domingo.</p>
+<p> Sábado é o dia com menor número de corridas. </p>
+<p>Como já havia sido identificado no histograma, o melhor mês é julho, já novembro e&nbsp; dezembro são os piores.</p>
+
+<img src="11.JPG" width="214" height="245" alt=""/>
+<h1>Conclusão </h1>
+<p>Este foi um exercício livre de análise, feito nas horas vagas. Mesmo assim foi possível descobrir várias inferências interessantes. Caso este trabalho seja refinado e automatizado, é possível gerar muitas conclusões com potencial de transformar a gestão destas empresas positivamente. </p>
+<p>Este trabalho, como todo trabalho de ciência de dados, é voltado a resultados. O valor da ciência de dados está na melhoria do negócio da empresa </p>
+	
 </body>
+	DataSprints -&nbsp; &nbsp; &nbsp;Análise dos dados de Taxi em NY nos anos de 2009, 2010, 20111 e 1012
+	
 </html>
